@@ -14,10 +14,12 @@ namespace SimpleStock.Controllers
     public class ProductsController : Controller
     {
         private readonly ProductService _productService;
+        private readonly CategoryService _categoryService;
 
-        public ProductsController(ProductService productService)
+        public ProductsController(ProductService productService, CategoryService categoryService)
         {
             _productService = productService;
+            _categoryService = categoryService;
         }
 
         public async Task<IActionResult> Index()
@@ -28,18 +30,20 @@ namespace SimpleStock.Controllers
 
         public async Task<IActionResult> Create()
         {
-            return View();
+            var categories = await _categoryService.FindAllAsync();
+            var viewModel = new ProductFormViewModel { Categories = categories };
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Product product)
+        public async Task<IActionResult> Create(ProductFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(product);
+                return View(viewModel);
             }
-            await _productService.InsertAsync(product);
+            await _productService.InsertAsync(viewModel.Product);
             return RedirectToAction(nameof(Index));
         }
 
@@ -102,7 +106,9 @@ namespace SimpleStock.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
             }
-            return View(obj);
+            List<Category> categories = await _categoryService.FindAllAsync();
+            ProductFormViewModel viewModel = new ProductFormViewModel { Product = obj, Categories = categories };
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -111,7 +117,9 @@ namespace SimpleStock.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(product);
+                var categories = await _categoryService.FindAllAsync();
+                var viewModel = new ProductFormViewModel { Product = product, Categories = categories };
+                return View(viewModel);
             }
             if (id != product.Id)
             {
@@ -140,14 +148,14 @@ namespace SimpleStock.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Sua página de descrição.";
 
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Sua página de contato.";
 
             return View();
         }
