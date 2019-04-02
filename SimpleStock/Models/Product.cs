@@ -29,6 +29,11 @@ namespace SimpleStock.Models
         [DisplayFormat(DataFormatString = "{0:C2}")]
         public double SalePrice { get; set; }
 
+        public Category Category { get; set; }
+
+        [Display(Name = "Categoria")]
+        public int CategoryId { get; set; }
+
         public Product()
         {
         }

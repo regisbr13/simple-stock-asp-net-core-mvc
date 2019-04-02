@@ -42,7 +42,9 @@ namespace SimpleStock
             services.AddDbContext<StockContext>(options => options.UseMySql(Configuration.GetConnectionString("StockContext"), builder => builder.MigrationsAssembly("SimpleStock")));
 
             services.AddScoped<ProductService>();
+            services.AddScoped<CategoryService>();
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
