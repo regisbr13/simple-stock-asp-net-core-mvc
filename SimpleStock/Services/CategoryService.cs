@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleStock.Data;
 using SimpleStock.Models;
+using SimpleStock.Services.Exceptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -28,20 +29,21 @@ namespace SimpleStock.Services
 
         public async Task<Category> FindByIdAsync(int id)
         {
-            return await _context.Category.FirstOrDefaultAsync(obj => obj.Id == id);
+            return await _context.Category.Include(p => p.Products).FirstOrDefaultAsync(obj => obj.Id == id);
         }
 
         public async Task RemoveAsync(int id)
         {
-            try
+            bool hasAny = await _context.Product.AnyAsync(x => x.CategoryId == id);
+            if (!hasAny)
             {
                 var obj = await _context.Category.FindAsync(id);
                 _context.Category.Remove(obj);
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException e)
+            else
             {
-                throw;
+                throw new IntegrityException("Não é possível a exclusão pois existem produtos nesta categoria");
             }
         }
 
@@ -50,7 +52,7 @@ namespace SimpleStock.Services
             bool hasAny = await _context.Category.AnyAsync(x => x.Id == obj.Id);
             if (!hasAny)
             {
-                return;
+                throw new NotFoundException("Id não encontrado");
             }
             try
             {
@@ -59,7 +61,7 @@ namespace SimpleStock.Services
             }
             catch (DbUpdateConcurrencyException e)
             {
-                throw;
+                throw new DbConcurrencyException(e.Message);
             }
         }
     }

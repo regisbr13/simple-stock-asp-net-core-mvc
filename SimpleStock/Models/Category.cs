@@ -14,6 +14,7 @@ namespace SimpleStock.Models
         [Display(Name = "Nome da categoria")]
         public string Name { get; set; }
 
+        [Display(Name = "Produtos")]
         public ICollection<Product> Products { get; set; } = new List<Product>();
 
         public Category()

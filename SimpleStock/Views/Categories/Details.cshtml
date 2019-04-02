@@ -15,6 +15,15 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Products)
+        </dt>
+        <dd>
+            @foreach (Product p in Model.Products)
+            {
+                @Html.DisplayName( p.Name + " | ")
+            }
+        </dd>
     </dl>
 </div>
 <div>

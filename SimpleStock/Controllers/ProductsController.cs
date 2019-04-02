@@ -43,6 +43,7 @@ namespace SimpleStock.Controllers
             {
                 return View(viewModel);
             }
+            viewModel.Product.Category.AddProduct(viewModel.Product);
             await _productService.InsertAsync(viewModel.Product);
             return RedirectToAction(nameof(Index));
         }

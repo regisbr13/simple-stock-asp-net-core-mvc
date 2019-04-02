@@ -29,6 +29,7 @@ namespace SimpleStock.Models
         [DisplayFormat(DataFormatString = "{0:C2}")]
         public double SalePrice { get; set; }
 
+        [Display(Name = "Categoria")]
         public Category Category { get; set; }
 
         [Display(Name = "Categoria")]
@@ -38,12 +39,14 @@ namespace SimpleStock.Models
         {
         }
 
-        public Product(string name, int quantity, double costPrice, double salePrice)
+        public Product(int id, string name, int quantity, double costPrice, double salePrice, Category category)
         {
+            Id = id;
             Name = name;
             Quantity = quantity;
             CostPrice = costPrice;
             SalePrice = salePrice;
+            Category = category;
         }
 
         public double CostSubtotal()

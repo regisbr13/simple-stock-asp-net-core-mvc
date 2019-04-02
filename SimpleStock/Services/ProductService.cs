@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleStock.Data;
 using SimpleStock.Models;
+using SimpleStock.Services.Exceptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace SimpleStock.Services
 
         public async Task<Product> FindByIdAsync(int id)
         {
-            return await _context.Product.FirstOrDefaultAsync(obj => obj.Id == id);
+            return await _context.Product.Include(obj => obj.Category).FirstOrDefaultAsync(obj => obj.Id == id);
         }
 
         public async Task RemoveAsync(int id)
@@ -50,7 +51,7 @@ namespace SimpleStock.Services
             bool hasAny = await _context.Product.AnyAsync(x => x.Id == obj.Id);
             if (!hasAny)
             {
-                return;
+                throw new NotFoundException("Id não encontrado");
             }
             try
             {
@@ -59,7 +60,7 @@ namespace SimpleStock.Services
             }
             catch (DbUpdateConcurrencyException e)
             {
-                throw;
+                throw new DbConcurrencyException(e.Message);
             }
         }
     }

@@ -2,6 +2,7 @@
 using SimpleStock.Models;
 using SimpleStock.Models.ViewModels;
 using SimpleStock.Services;
+using SimpleStock.Services.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -67,7 +68,7 @@ namespace SimpleStock.Controllers
                 await _categoryService.RemoveAsync(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception e)
+            catch (IntegrityException e)
             {
                 return RedirectToAction(nameof(Error), new { message = e.Message });
             }
