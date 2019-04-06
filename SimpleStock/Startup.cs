@@ -39,7 +39,7 @@ namespace SimpleStock
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<StockContext>(options => options.UseMySql(Configuration.GetConnectionString("StockContext"), builder => builder.MigrationsAssembly("SimpleStock")));
+            services.AddDbContext<StockContext>(options => options.UseSqlServer(Configuration.GetConnectionString("StockContext")));
 
             services.AddScoped<ProductService>();
             services.AddScoped<CategoryService>();

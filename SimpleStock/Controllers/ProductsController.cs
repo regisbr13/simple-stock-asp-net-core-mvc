@@ -146,24 +146,5 @@ namespace SimpleStock.Controllers
             };
             return View(viewModel);
         }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Sua página de descrição.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Sua página de contato.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
     }
 }

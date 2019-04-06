@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        <link rel="stylesheet" href=""~/lib/bootstrap/dist/css/bootstrap.min.css""
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
@@ -32,20 +32,19 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Products" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Categories" asp-action="Index">Categorias</a></li>
-                    <li><a asp-area="" asp-controller="Products" asp-action="About">Sobre</a></li>
-                    <li><a asp-area="" asp-controller="Products" asp-action="Contact">Contato</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <partial name="_CookieConsentPartial" />
-
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2019 - Meu Estoque</p>
+            <p>
+                &copy; 2019 - Developed by Regis -
+                <a href="https://github.com/regisbr13/simple-stock-asp-net-core-mvc" target="_blank">Código do Projeto</a>
+            </p>
         </footer>
     </div>
 
