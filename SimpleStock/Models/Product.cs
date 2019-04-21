@@ -11,11 +11,6 @@ namespace SimpleStock.Models
         [Display(Name = "Nome do produto")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Campo obrigatório")]
-        [Display(Name = "Quantidade")]
-        public int Quantity { get; set; }
-
-
         [Required(ErrorMessage = "valor obrigatório")]
         [Display(Name = "Preço de compra")]
         [DataType(DataType.Currency)]
@@ -33,85 +28,21 @@ namespace SimpleStock.Models
         public Category Category { get; set; }
 
         [Display(Name = "Categoria")]
+        [Required(ErrorMessage = "é necessária a criação de uma categoria")]
         public int CategoryId { get; set; }
 
         public Product()
         {
         }
 
-        public Product(int id, string name, int quantity, double costPrice, double salePrice, Category category)
+        public Product(int id, string name, double costPrice, double salePrice, Category category)
         {
             Id = id;
             Name = name;
-            Quantity = quantity;
             CostPrice = costPrice;
             SalePrice = salePrice;
             Category = category;
         }
 
-        public double CostSubtotal()
-        {
-            return Quantity * CostPrice;
-        }
-
-        public double SaleSubtotal()
-        {
-            return Quantity * SalePrice;
-        }
-
-        public double Profit()
-        {
-            return SaleSubtotal() - CostSubtotal();
-        }
-
-        public double QttTotal(IEnumerable<Product> products)
-        {
-            int sum = 0;
-            foreach (Product p in products)
-            {
-                sum += p.Quantity;
-            }
-            return sum;
-        }
-
-        public double CostTotal(IEnumerable<Product> products)
-        {
-            double sum = 0.0;
-            foreach (Product p in products)
-            {
-                sum += p.CostSubtotal();
-            }
-            return sum;
-        }
-
-        public double SaleTotal(IEnumerable<Product> products)
-        {
-            double sum = 0.0;
-            foreach (Product p in products)
-            {
-                sum += p.SaleSubtotal();
-            }
-            return sum;
-        }
-
-        public double ProfitTotal(IEnumerable<Product> products)
-        {
-            double sum = 0.0;
-            foreach (Product p in products)
-            {
-                sum += p.Profit();
-            }
-            return sum;
-        }
-
-        public double ProfitMargin()
-        {
-            return Profit() / CostSubtotal();
-        }
-
-        public double ProfitMarginTotal(IEnumerable<Product> products)
-        {
-            return ProfitTotal(products) / CostTotal(products);
-        }
     }
 }

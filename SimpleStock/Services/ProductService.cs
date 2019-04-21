@@ -27,7 +27,7 @@ namespace SimpleStock.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Product> FindByIdAsync(int id)
+        public async Task<Product> FindByIdAsync(int? id)
         {
             return await _context.Product.Include(obj => obj.Category).FirstOrDefaultAsync(obj => obj.Id == id);
         }

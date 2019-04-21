@@ -1,15 +1,15 @@
 ﻿@model SimpleStock.Models.ViewModels.ErrorViewModel
 @{
-    ViewData["Title"] = "Erro";
+    ViewData["Title"] = "Ocorreu um erro";
 }
 
 <h1 class="text-danger">@ViewData["Title"]</h1>
-<h2 class="text-danger">@Model.Message</h2>
+<h2 class="alert alert-danger">@Model.Message</h2>
 
 @if (Model.ShowRequestId)
 {
     <p>
-        <strong>Código do erro:</strong> <code>@Model.RequestId</code>
+        <strong>Requisição:</strong> <code>@Model.RequestId</code>
     </p>
 }
 

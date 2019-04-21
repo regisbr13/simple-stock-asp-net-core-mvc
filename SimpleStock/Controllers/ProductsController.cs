@@ -41,9 +41,9 @@ namespace SimpleStock.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(viewModel);
+                return RedirectToAction(nameof(Index));
             }
-            viewModel.Product.Category.AddProduct(viewModel.Product);
+            TempData["confirm"] = viewModel.Product.Name + " foi cadastrado com sucesso.";
             await _productService.InsertAsync(viewModel.Product);
             return RedirectToAction(nameof(Index));
         }
@@ -52,31 +52,25 @@ namespace SimpleStock.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id não fornecido" });
+                return NotFound();
             }
 
-            var obj = await _productService.FindByIdAsync(id.Value);
+            var obj = await _productService.FindByIdAsync(id);
             if (obj == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
+                return NotFound();
             }
 
             return View(obj);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                await _productService.RemoveAsync(id);
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction(nameof(Error), new { message = e.Message });
-            }
+            var product = await _productService.FindByIdAsync(id);
+            TempData["confirm"] = product.Name + " foi removido com sucesso.";
+            await _productService.RemoveAsync(id);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -114,7 +108,7 @@ namespace SimpleStock.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Product product)
+        public async Task<IActionResult> Edit(Product product)
         {
             if (!ModelState.IsValid)
             {
@@ -122,13 +116,10 @@ namespace SimpleStock.Controllers
                 var viewModel = new ProductFormViewModel { Product = product, Categories = categories };
                 return View(viewModel);
             }
-            if (id != product.Id)
-            {
-                return RedirectToAction(nameof(Error), new { message = "Id não corresponde" });
-            }
             try
             {
                 await _productService.UpdateAsync(product);
+                TempData["confirm"] = product.Name + " foi atualizado com sucesso.";
                 return RedirectToAction(nameof(Index));
             }
             catch (ApplicationException e)

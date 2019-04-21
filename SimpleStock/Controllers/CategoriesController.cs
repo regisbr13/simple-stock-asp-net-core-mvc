@@ -40,6 +40,7 @@ namespace SimpleStock.Controllers
                 return View(category);
             }
             await _categoryService.InsertAsync(category);
+            TempData["confirm"] = "Categoria " + category.Name + " criada com sucesso";
             return RedirectToAction(nameof(Index));
         }
 
@@ -120,6 +121,7 @@ namespace SimpleStock.Controllers
             try
             {
                 await _categoryService.UpdateAsync(category);
+                TempData["confirm"] = "Categoria " + category.Name + " atualizada com sucesso";
                 return RedirectToAction(nameof(Index));
             }
             catch (ApplicationException e)

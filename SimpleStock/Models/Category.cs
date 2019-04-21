@@ -26,10 +26,5 @@ namespace SimpleStock.Models
             Id = id;
             Name = name;
         }
-
-        public void AddProduct(Product p)
-        {
-            Products.Add(p);
-        }
     }
 }

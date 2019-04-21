@@ -1,32 +1,27 @@
 ﻿@model SimpleStock.Models.Category
 
 @{
+    Layout = null;
     ViewData["Title"] = "Detalhes";
 }
 
-<h2>@ViewData["Title"]</h2>
-
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Products)
-        </dt>
-        <dd>
-            @foreach (Product p in Model.Products)
-            {
-                @Html.DisplayName( p.Name + " | ")
-            }
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Editar</a> |
-    <a asp-action="Index">Voltar</a>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Produtos na categoria <strong>@Model.Name</strong></h4>
+        </div>
+        <div class="modal-body">
+        
+            <ul class="list-group-item-info">
+                @foreach (var p in Model.Products)
+                {
+                    <li>@p.Name</li>
+                }
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <input type="button" class="btn btn-default btn-danger btn-sm" data-dismiss="modal" value="Fechar">
+        </div>
+    </div>
 </div>

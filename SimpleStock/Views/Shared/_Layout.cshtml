@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href=""~/lib/bootstrap/dist/css/bootstrap.min.css""
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
@@ -41,10 +41,17 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>
-                &copy; 2019 - Developed by Regis -
-                <a href="https://github.com/regisbr13/simple-stock-asp-net-core-mvc" target="_blank">Código do Projeto</a>
-            </p>
+            <div class="row text-center">
+                <div class="col-md-4 btn">
+                    &copy; 2019 - Developed by Regis
+                </div>
+                <div class="col-md-4">
+                    <a href="https://github.com/regisbr13/simple-stock-asp-net-core-mvc" target="_blank" class="btn btn-link">Código do Projeto</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="https://meuportfolio.azurewebsites.net/" target="_blank" class="btn btn-link">Mais projetos</a>
+                </div>
+            </div>
         </footer>
     </div>
 
@@ -68,7 +75,6 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>
